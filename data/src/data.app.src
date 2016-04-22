@@ -1,0 +1,12 @@
+{application, data,
+ [
+  {description, "there are some test data"},
+  {vsn, "0.1.0"},
+  {registered, [data_sup]},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { data_app, []}},
+  {modules, [data_app,data_sup,data_server]}
+ ]}.
