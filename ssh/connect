@@ -1,0 +1,23 @@
+#!/bin/bash
+# -*- bash -*-
+# SSH Connect
+
+# Def Config File Path
+config_path=~
+# Def Match IP
+match_host=
+# Def Title
+tbl_title="&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+# Def User Input
+input
+# Show Login Info From config file
+# sed  '/^#/d; /^$/d; /$match_ip/p' $config_path/.ssh_conf | gawk -F : '{print $1}'
+sed -n '/^#/d; /^$/d; /^'$match_ip'/p' $config_path/.ssh_conf | \
+    gawk -F : 'BEGIN{printf "%35s\n","'$tbl_title'";printf "& %-5s%-15s%-15s &\n","SEQ","IP Address","Comment";printf "%35s\n","'$tbl_title'"}{printf "& %-5s%-15s%-15s &\n",$1,$2,$7}END{printf "%35s\n","'$tbl_title'"}'
+
+read -p "SEQ : " input
+
+sed -n '/^#/d; /^$/d; /^'$input'/p' $config_path/.ssh_conf | gawk -F : '{print "Login To : " $2 " ..."}'
+match_host=$(sed -n '/^#/d; /^$/d; /^'$input'/p' $config_path/.ssh_conf | gawk -F : '{print "ssh -i " $6 " -p " $3 " " $4"@"$2}')
+eval $match_host
+
