@@ -4,13 +4,16 @@
 # History  :
 #	2017/03/15	V0.1.0	Simon<xshumeng@gmail.com>
 
+# 1. 环境变量设置
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 export PATH
 
+# 2. 全局变量设置
 weight_down=1
 weight_up=16
 bits=1
 
+# 3. 输出帮助信息
 function help()
 {
     format="%-5s%-4s%-s\n"
@@ -22,6 +25,7 @@ function help()
     printf $format "" "p" "查看当前练习的数字位数"
 }
 
+# 4. 重置练习数字位数
 function cweight()
 {
     read -p "请输入练习数字的位数：" bit
@@ -31,11 +35,11 @@ function cweight()
     weight_down=$((`echo "16^$((bit - 1))" | bc` - 1))
 }
 
+# 5. 主循环
 function while_done()
 {
     while true; do
 	read -p "请输入操作起始符号(eg.?): " input
-
 	case $input in
 	    "?")
 		help
@@ -60,8 +64,8 @@ function while_done()
     done
 }
 
-
-
+# 6. 产生随机数
+# eg. number=`rand 100 200`
 function rand()
 {
     min=$1
@@ -70,11 +74,7 @@ function rand()
     echo $[$num%$max+$min]
 }
 
-function symb()
-{
-    [[ $(rand 0 1) == 1 ]] && echo "-" || echo "+"
-}
-
+# 7. 开始练习循环
 function start()
 {
     while true; do
@@ -96,6 +96,8 @@ function start()
     done
 }
 
+# 8. 开始
 while_done
 
+# 9. 退出
 exit 0
