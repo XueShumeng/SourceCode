@@ -3,6 +3,7 @@
 #	16进制加减法练习
 # History  :
 #	2017/03/15	V0.1.0	Simon<xshumeng@gmail.com>
+#	2017/03/19	V0.1.0  Simon<xshumeng@gmail.com>
 
 # 1. 环境变量设置
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
@@ -39,7 +40,8 @@ function cweight()
 function while_done()
 {
     while true; do
-	read -p "请输入操作起始符号(eg.?): " input
+	read -p "请输入操作选择(eg.?): " input
+
 	case $input in
 	    "?")
 		help
@@ -65,7 +67,6 @@ function while_done()
 }
 
 # 6. 产生随机数
-# eg. number=`rand 100 200`
 function rand()
 {
     min=$1
@@ -74,30 +75,32 @@ function rand()
     echo $[$num%$max+$min]
 }
 
-# 7. 开始练习循环
+# 7. 产生操作数符号
+function symb()
+{
+    [[ $(rand 0 1) == 1 ]] && echo "-" || echo "+"
+}
+
+# 8. 开始练习循环
 function start()
 {
     while true; do
+	[[ $(rand 0 1) == 1 ]] && rnd3="+" || rnd3="-"
 	rnd1=`rand $weight_down $weight_up`
 	rnd2=`rand $weight_down $weight_up`
 	hex1=`echo "ibase=10;obase=16;$((rnd1 - 1))" | bc`
-	echo -n "计算数式：$hex1 "
-	[[ $(rand 0 1) == 1 ]] && rnd3="+" || rnd3="-"
-	echo -n "$rnd3 "
 	hex2=`echo "ibase=10;obase=16;$((rnd2 - 1))" | bc`
-	echo -n "$hex2 = "
-	# printf "%$((bits+2))s %-2s%-$((bits+1))s=" $hex1 $rnd3 $hex2
 	res=`echo "$((rnd1 - 1))$rnd3$((rnd2 - 1))" | bc`
-	read ires
+	read -p "$hex1 $rnd3 $hex2 = " ires
 	[[ "$ires" = "q" ]] && break
 	iresd=`echo "obase=10;ibase=16;$ires" | bc`
 	sureres=`echo "obase=16;ibase=10;$res" | bc`
-	[[ $iresd == $res ]] && echo "你答对了：$sureres" || echo "正确答案：$sureres"
+	[[ $iresd == $res ]] && echo -e "\033[32m你答对了：$sureres\033[0m" || echo -e "\033[31m正确答案：$sureres\033[0m"
     done
 }
 
-# 8. 开始
+# 9. 开始主循环
 while_done
 
-# 9. 退出
+# 10. 正常退出
 exit 0

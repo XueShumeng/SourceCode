@@ -1,9 +1,9 @@
-# Manager SSH connection 
+# Manager SSH connection
 # Format :
 # Seq:Host:Port:User:Passwd:Key:Comment
 
-1:192.168.162.130:22:simon::/home/simon/etc/keys/simon.key:dev
-2:192.168.162.131:22:simon::/home/simon/etc/keys/simon.key:dev
-3:192.168.162.132:22:simon::/home/simon/etc/keys/simon.key:dev
-4:192.168.162.133:22:simon:::local
-# 5:192.168.162.132:22:simon::/home/simon/etc/keys/simon.key:dev
+192.168.162.130:22:simon::/home/simon/etc/keys/simon.key:dev
+192.168.162.131:22:simon::/home/simon/etc/keys/simon.key:dev
+192.168.162.132:22:simon::/home/simon/etc/keys/simon.key:dev
+192.168.162.133:22:simon:::local
+#192.168.162.132:22:simon::/home/simon/etc/keys/simon.key:dev
